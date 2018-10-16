@@ -11,7 +11,7 @@ You will need to turn this into a real world app by adding a backend and convert
 In the backend folder, you will need to:
 
     1. Use MySQL or PostgreSQL along with any database framework
-    2. Define models for users and group following these rough schemas:
+    2. Define models for users and groups following these rough schemas (you may want to create an extra table to track this mapping relationship)
 
         Users:
         {
@@ -26,7 +26,7 @@ In the backend folder, you will need to:
             label: <String> (Human readable form "Group Name")
         }
 
-    5. Provide a REST server to handle interactions via the frontend (it should serve JSON responses).
+    3. Provide a REST server to handle interactions via the frontend (it should serve JSON responses).
 
 In the React frontend folder, you will need to:
 
@@ -35,6 +35,7 @@ In the React frontend folder, you will need to:
     3. Use POST and PATCH requests to create and update users.
     4. Use DELETE requests to remove users.
     5. Keep all components in sync with the data in your database.
+    6. Bonus, add a list view to see all users who are in a particular group.
 
 Instructions for starting the React app are in `/frontend/README.md`
 
