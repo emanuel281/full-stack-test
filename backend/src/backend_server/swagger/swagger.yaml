@@ -1,0 +1,302 @@
+---
+swagger: "2.0"
+info:
+  description: "This is server to manage users."
+  version: "1.0.0"
+  title: "Swagger Manage Users"
+  termsOfService: "http://swagger.io/terms/"
+host: "localhost:3000"
+basePath: "/"
+tags:
+- name: "user"
+  description: "Operations about user"
+- name: "groups"
+  description: "Operations about user groups"
+schemes:
+- "http"
+paths:
+  /users:
+    get:
+      tags:
+      - "user"
+      summary: "Get user list"
+      description: ""
+      operationId: "get_users"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "List of users"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        default:
+          description: "Unexpected Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "backend_server.controllers.user_controller"
+    post:
+        tags:
+        - "user"
+        summary: "Add new user"
+        description: ""
+        operationId: "add_user"
+        consumes:
+        - "application/json"
+        produces:
+        - "application/json"
+        parameters:
+        - in: "body"
+          name: "body"
+          description: "user details"
+          required: true
+          schema:
+            $ref: "#/definitions/NewUser"
+        responses:
+          200:
+            description: "Add new user"
+            schema:
+              $ref: "#/definitions/DefaultResponse"
+          default:
+            description: "Unexpected Error"
+            schema:
+              $ref: "#/definitions/Error"
+        x-swagger-router-controller: "backend_server.controllers.user_controller"
+  /users/{user_id}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by id"
+      description: ""
+      operationId: "get_user_by_id"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        description: "user id"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Get user by id"
+          schema:
+            $ref: "#/definitions/User"
+        default:
+          description: "Unexpected Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "backend_server.controllers.user_controller"
+    delete:
+      tags:
+      - "user"
+      summary: "Get user by id"
+      description: ""
+      operationId: "delete_user_by_id"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        description: "user id"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "delete user by id"
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+        default:
+          description: "Unexpected Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "backend_server.controllers.user_controller"
+    patch:
+      tags:
+      - "user"
+      summary: "update user"
+      description: ""
+      operationId: "update_user"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "user_id"
+        in: "path"
+        description: "user id"
+        required: true
+        type: "integer"
+      - in: "body"
+        name: "body"
+        description: "user id"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        200:
+          description: "Update user"
+          schema:
+            $ref: "#/definitions/DefaultResponse"
+        default:
+          description: "Unexpected Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "backend_server.controllers.user_controller"
+  /groups/{group_id}/users:
+    get:
+      tags:
+      - "groups"
+      summary: "Get users by group id"
+      description: ""
+      operationId: "get_users_by_group_id"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "group_id"
+        in: "path"
+        description: "group id"
+        required: true
+        type: "integer"
+      responses:
+        200:
+          description: "Get users by group id"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        default:
+          description: "Unexpected Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "backend_server.controllers.groups_controller"
+  /groups:
+    get:
+      tags:
+      - "groups"
+      summary: "Get groups"
+      description: ""
+      operationId: "get_groups"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "Get groups"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Group"
+        default:
+          description: "Unexpected Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "backend_server.controllers.groups_controller"
+    post:
+      tags:
+      - "groups"
+      summary: "Add group"
+      description: ""
+      operationId: "add_group"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        description: "group info"
+        required: true
+        schema:
+          $ref: '#/definitions/NewGroup'
+      responses:
+        200:
+          description: "Add new group"
+          schema:
+            $ref: "#/definitions/Group"
+        default:
+          description: "Unexpected Error"
+          schema:
+            $ref: "#/definitions/Error"
+      x-swagger-router-controller: "backend_server.controllers.groups_controller"
+definitions:
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+      username:
+        type: "string"
+      name:
+        type: "string"
+      groups:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      name: "name"
+      groups:
+      - "groups"
+      - "groups"
+      username: "username"
+  NewUser:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+      name:
+        type: "string"
+      groups:
+        type: "array"
+        items:
+          type: "string"
+    example:
+      id: 0
+      password: "password"
+      name: "name"
+      groups:
+      - "groups"
+      - "groups"
+      username: "username"
+  Group:
+    type: "object"
+    properties:
+      name:
+        type: "object"
+      id:
+        type: "integer"
+  NewGroup:
+    type: "object"
+    properties:
+      name:
+        type: "string"
+  DefaultResponse:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+      message:
+        type: "string"
+    example:
+      code: 0
+      message: "message"
+  Error:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+      message:
+        type: "string"
